@@ -6,11 +6,18 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:08:32 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:08:32 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:18:15 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* Cette fonction est utilisée pour exécuter une commande unique
+(c'est-à-dire sans pipeline).
+Elle utilise les descripteurs de fichiers pour gérer les entrées/sorties
+redirigées, puis appelle soit la fonction execve pour exécuter la
+commande externe, soit une fonction de built-in si
+la commande est un built-in. */
 
 void	fork_one_cmd(t_data *minis, char **envp,
 		int redi_pipe[2][2], t_board *cmd)
@@ -27,6 +34,12 @@ void	fork_one_cmd(t_data *minis, char **envp,
 	free_list(minis->env);
 	exit(1);
 }
+
+/* Cette fonction est utilisée pour exécuter la première commande d'un pipeline.
+Elle utilise les descripteurs de fichiers pour gérer les entrées/sorties
+redirigées et le pipe, puis appelle soit la fonction execve pour exécuter
+la commande externe, soit une fonction de built-in si
+la commande est un built-in. */
 
 void	fork_first_cmd(t_data *minis, char **envp,
 		int redi_pipe[2][2], int i)
@@ -48,6 +61,12 @@ void	fork_first_cmd(t_data *minis, char **envp,
 	free_list(minis->env);
 	exit(1);
 }
+
+/* Cette fonction est utilisée pour exécuter une commande intermédiaire
+d'un pipeline. Elle utilise les descripteurs de fichiers pour gérer
+les entrées/sorties redirigées et le pipe, puis appelle soit la
+fonction execve pour exécuter la commande externe,
+soit une fonction de built-in si la commande est un built-in. */
 
 void	fork_middle_cmd(t_data *minis, char **envp,
 		int redi_pipe[2][2], int i)
@@ -71,6 +90,12 @@ void	fork_middle_cmd(t_data *minis, char **envp,
 	exit(1);
 }
 
+/* Cette fonction est utilisée pour exécuter la dernière commande
+d'un pipeline. Elle utilise les descripteurs de fichiers pour gérer
+les entrées/sorties redirigées et le pipe, puis appelle soit la
+fonction execve pour exécuter la commande externe, soit une fonction
+de built-in si la commande est un built-in. */
+
 void	fork_last_cmd(t_data *minis, char **envp,
 		int redi_pipe[2][2], int i)
 {
@@ -91,6 +116,12 @@ void	fork_last_cmd(t_data *minis, char **envp,
 	free_list(minis->env);
 	exit(1);
 }
+
+/* Cette fonction attend que tous les processus enfants créés
+par le shell aient terminé leur exécution et stocke le résultat
+de chaque processus dans la variable res.
+Elle utilise la fonction waitpid pour attendre
+la fin de chaque processus. */
 
 void	wait_all_pid(t_data *minis, int *res)
 {

@@ -6,11 +6,14 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:06:32 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:06:35 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:13:44 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* La fonction count_new_quote compte le nombre de caractères dans une chaîne
+de caractères en prenant en compte les quotes simples (') et doubles ("). */
 
 int	count_new_quote(char *str)
 {
@@ -33,6 +36,13 @@ int	count_new_quote(char *str)
 	}
 	return (count);
 }
+
+/* La fonction write_to_new_singlequote et write_to_new_doublequote permettent
+d'écrire une partie de la chaîne de caractères str (entre quotes) dans
+la nouvelle chaîne de caractères new.
+La variable i représente la position actuelle dans la chaîne de caractères str
+et la variable j représente la position actuelle dans la nouvelle chaîne
+de caractères new. */
 
 void	write_to_new_singlequote(char *str, char *new, int *i, int *j)
 {
@@ -59,6 +69,11 @@ void	write_to_new_doublequote(char *str, char *new, int *i, int *j)
 	if (str[*i] == 34)
 		*i += 1;
 }
+
+/* La fonction get_new_str crée une nouvelle chaîne de caractères
+en enlevant les quotes simples et doubles de la chaîne de caractères str.
+Elle utilise les fonctions
+write_to_new_singlequote et write_to_new_doublequote. */
 
 char	*get_new_str(char *str)
 {
@@ -88,6 +103,10 @@ char	*get_new_str(char *str)
 	free(str);
 	return (new);
 }
+
+/* La fonction delete_quote permet de supprimer les quotes dans les
+commandes stockées dans la structure t_cmd du programme.
+Elle utilise la fonction get_new_str pour chaque mot des commandes. */
 
 void	delete_quote(t_data *minis)
 {

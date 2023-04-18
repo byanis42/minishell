@@ -6,13 +6,15 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:07:49 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:07:49 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 10:11:18 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 int	g_code_erreur;
+
+/* vérifie si une chaîne de caractères ne contient que des espaces. */
 
 int	check_all_spaces(char *str)
 {
@@ -25,6 +27,11 @@ int	check_all_spaces(char *str)
 		return (0);
 	return (1);
 }
+
+/* appelle les fonctions nécessaires pour traiter chaque commande
+saisie par l'utilisateur. Elle ajoute également la commande à l'historique,
+gère les redirections et les variables d'environnement,
+et lance les processus en utilisant des pipes. */
 
 void	each_things_to_do(t_data *minis, char **envp)
 {
@@ -48,6 +55,9 @@ void	each_things_to_do(t_data *minis, char **envp)
 	check_directory(minis);
 	free_struct((minis));
 }
+
+/* boucle principale du programme qui lit l'entrée de l'utilisateur et
+appelle each_things_to_do pour traiter chaque commande. */
 
 void	minishell_loop(char **envp)
 {

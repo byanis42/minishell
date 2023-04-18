@@ -6,11 +6,16 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:07:34 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:07:34 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:00:52 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* ft_strlen_var, prend une chaîne de caractères et un index en entrée.
+Elle compte la longueur d'une variable d'environnement,
+à partir de l'index donné, en recherchant tous les caractères alphanumériques,
+'_' et '?'. La valeur de retour est la longueur de la variable trouvée. */
 
 int	ft_strlen_var(char *str, int j)
 {
@@ -27,6 +32,12 @@ int	ft_strlen_var(char *str, int j)
 	}
 	return (i);
 }
+
+/* search_env_var prend une chaîne de caractères,
+un index et un pointeur sur une structure de données t_data.
+Elle recherche une variable d'environnement dans la chaîne à partir
+de l'index donné. Elle retourne un pointeur sur une nouvelle chaîne allouée
+dynamiquement contenant le nom de la variable trouvée. */
 
 char	*search_env_var(char *str, int i, t_data *minis)
 {
@@ -53,6 +64,11 @@ char	*search_env_var(char *str, int i, t_data *minis)
 	return (new);
 }
 
+/* is_an_other_var_env prend une chaîne de caractères contenant
+une variable d'environnement. Elle vérifie si la chaîne contient une autre
+variable d'environnement. La fonction retourne 1 si la chaîne contient une
+autre variable d'environnement, sinon elle retourne 0. */
+
 int	is_an_other_var_env(char *var_env)
 {
 	int	j;
@@ -64,6 +80,14 @@ int	is_an_other_var_env(char *var_env)
 		return (1);
 	return (0);
 }
+
+/* get_envp_var prend un pointeur sur une structure de données t_data,
+une chaîne de caractères et un pointeur sur une variable empty en entrée.
+Elle recherche des variables d'environnement dans la chaîne et les remplace
+par leur valeur correspondante. La fonction retourne une nouvelle chaîne
+de caractères allouée dynamiquement.
+La variable empty est mise à 1 si la variable
+d'environnement trouvée est vide. */
 
 char	*get_envp_var(t_data *minis, char *cmd, int *empty)
 {
@@ -92,6 +116,12 @@ char	*get_envp_var(t_data *minis, char *cmd, int *empty)
 	}
 	return (cmd);
 }
+
+/* put_env_var, parcourt toutes les commandes stockées dans la structure
+de données t_data et remplace les variables d'environnement par leur
+valeur correspondante à l'aide de la fonction get_envp_var.
+Si la variable d'environnement trouvée est vide, la variable
+var_env_empty est mise à 1. */
 
 void	put_env_var(t_data *ms)
 {

@@ -6,11 +6,15 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:08:05 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:08:05 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 15:55:10 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* Cette fonction vérifie si l'argument de la commande est un répertoire.
+Si c'est le cas, elle affiche un message d'erreur et renvoie 1.
+Sinon, elle renvoie 0. */
 
 int	error_message_directory(t_data *minis, t_board *cmd, int i)
 {
@@ -31,6 +35,10 @@ int	error_message_directory(t_data *minis, t_board *cmd, int i)
 	}
 	return (0);
 }
+
+/* Cette fonction parcourt toutes les commandes dans la structure minis et
+utilise la fonction error_message_directory pour chaque commande.
+Si une commande est un répertoire, elle affiche un message d'erreur. */
 
 void	check_directory(t_data *minis)
 {

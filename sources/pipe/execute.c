@@ -6,11 +6,15 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:08:28 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:08:28 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:19:29 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* Cette fonction ferme tous les descripteurs de fichiers associés aux pipes.
+Elle prend en argument une structure t_data qui contient toutes les informations
+nécessaires pour gérer les pipes. */
 
 void	ft_execute_bis(t_data *minis, char **envp, int i)
 {
@@ -29,6 +33,13 @@ void	ft_execute_bis(t_data *minis, char **envp, int i)
 		middle_cmd(minis, envp, i);
 	}
 }
+
+/* Cette fonction parcourt toutes les commandes et vérifie si elles font
+partie des built-ins. Si ce n'est pas le cas, elle recherche
+le chemin absolu de l'exécutable en utilisant la variable d'environnement PATH.
+Elle met à jour la structure de la commande avec le chemin absolu.
+Elle prend en argument une structure t_data qui contient toutes les
+informations nécessaires pour gérer les commandes. */
 
 int	ft_execute(t_data *minis, char **envp)
 {

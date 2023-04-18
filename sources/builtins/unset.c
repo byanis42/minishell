@@ -6,11 +6,15 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:07:20 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:07:21 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:05:24 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* La fonction ft_delete_middle_node prend en entrée un pointeur vers
+une variable d'environnement env et
+supprime le nœud suivant à celui pointé par env. */
 
 void	ft_delete_middle_node(t_var *env)
 {
@@ -24,6 +28,9 @@ void	ft_delete_middle_node(t_var *env)
 	free(tmp);
 }
 
+/* La fonction ft_delete_last_node prend en entrée un pointeur vers une variable
+d'environnement env et supprime le dernier nœud. */
+
 void	ft_delete_last_node(t_var *env)
 {
 	t_var	*tmp;
@@ -35,6 +42,9 @@ void	ft_delete_last_node(t_var *env)
 	free(tmp);
 	env->next = NULL;
 }
+
+/* La fonction ft_delete_first_node prend en entrée un pointeur vers
+une variable d'environnement env et supprime le premier nœud. */
 
 t_var	*ft_delete_first_node(t_var *env)
 {
@@ -50,6 +60,10 @@ t_var	*ft_delete_first_node(t_var *env)
 	free(tmp);
 	return (env);
 }
+
+/* La fonction ft_delete_node prend en entrée une chaîne de caractères str
+et un pointeur vers une variable d'environnement env et supprime
+le nœud correspondant à la chaîne str. */
 
 t_var	*ft_delete_node(char *str, t_var *env)
 {
@@ -77,6 +91,13 @@ t_var	*ft_delete_node(char *str, t_var *env)
 		ft_delete_last_node(env);
 	return (start);
 }
+
+/* La fonction ft_unset prend en entrée un pointeur vers une structure minis
+et un pointeur vers une structure cmd qui contient les arguments
+de la commande unset.
+Cette fonction appelle la fonction ft_delete_node pour chaque argument
+de la commande unset, et supprime les nœuds correspondants de la liste
+chaînée env de minis. */
 
 void	ft_unset(t_data *minis, t_board *cmd)
 {

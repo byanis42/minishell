@@ -6,11 +6,14 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:08:35 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:08:35 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 16:14:26 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* Cette fonction copie le nom de la commande stockée dans le tableau tab
+d'une structure t_board dans une chaîne de caractères. */
 
 void	cpy_cmd(t_board *cmd, char *poss, int i)
 {
@@ -25,6 +28,11 @@ void	cpy_cmd(t_board *cmd, char *poss, int i)
 	}
 	poss[i] = '\0';
 }
+
+/* Cette fonction copie une partie d'un chemin d'accès depuis une variable
+d'environnement PATH dans une nouvelle chaîne de caractères.
+La fonction prend également une structure t_board et retourne la chaîne
+nouvellement créée. */
 
 char	*cpy_path(t_data *minis, t_board *cmd, char *path, int *path_len)
 {
@@ -50,6 +58,12 @@ char	*cpy_path(t_data *minis, t_board *cmd, char *path, int *path_len)
 	cpy_cmd(cmd, poss, i);
 	return (poss);
 }
+
+/* Cette fonction vérifie si l'exécution du programme est autorisée
+ou non en utilisant la fonction access et retourne le nom de la commande si
+elle peut être exécutée et NULL sinon. Si l'accès est refusé,
+la fonction affiche un message d'erreur et affecte la variable globale
+g_code_erreur à 126. */
 
 char	*check_acces_path(t_data *minis, t_board *cmd)
 {
@@ -78,12 +92,22 @@ char	*check_acces_path(t_data *minis, t_board *cmd)
 	return (NULL);
 }
 
+/* Cette fonction est utilisée pour déterminer si nous devons avancer
+le pointeur vers le prochain chemin dans la variable d'environnement PATH. */
+
 int	ft_move_path(char *path, int *path_len)
 {
 	if (path[*path_len] == ':')
 		return (1);
 	return (0);
 }
+
+/* Cette fonction prend une structure t_data, une chaîne de caractères path,
+et une structure t_board.
+La fonction essaie de trouver le chemin complet de la commande cmd dans la
+variable d'environnement PATH en appelant les fonctions précédemment décrites.
+La fonction retourne NULL si la commande n'a pas été trouvée ou le chemin
+complet de la commande si elle a été trouvée. */
 
 char	*ft_try_path(t_data *minis, char *path, t_board *cmd)
 {

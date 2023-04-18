@@ -6,11 +6,17 @@
 /*   By: byanis <byanis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 23:06:51 by byanis            #+#    #+#             */
-/*   Updated: 2023/04/17 23:06:51 by byanis           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:24:58 by byanis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* Cette fonction prend en entrée une chaîne de caractères contenant une
+variable d'environnement déclarée sous la forme "nom=valeur" et renvoie
+une nouvelle chaîne de caractères contenant uniquement le nom de la variable.
+La fonction alloue dynamiquement la mémoire nécessaire pour la nouvelle
+chaîne de caractères. */
 
 char	*get_name(char *str, t_data *minis)
 {
@@ -34,6 +40,13 @@ char	*get_name(char *str, t_data *minis)
 	return (str_ret);
 }
 
+/* Cette fonction prend en entrée une chaîne de caractères contenant
+une variable d'environnement déclarée sous la forme "nom=valeur" et le nom
+de la variable. La fonction met à jour la valeur de la variable d'environnement
+correspondante dans la liste chaînée des variables d'environnement de minis
+en remplaçant l'ancienne valeur par la nouvelle valeur de
+la variable passée en argument. */
+
 void	ft_assign_new_value(t_data *minis, char *str, char *name)
 {
 	t_var	*ptr;
@@ -42,6 +55,12 @@ void	ft_assign_new_value(t_data *minis, char *str, char *name)
 	free(ptr->value);
 	ft_get_value(minis, str, ptr);
 }
+
+/* Cette fonction prend en entrée une chaîne de caractères contenant
+une variable d'environnement déclarée sous la forme "nom=valeur".
+La fonction crée une nouvelle variable d'environnement dans la liste chaînée
+des variables d'environnement de minis et y insère le nom et la valeur
+de la variable passée en argument. */
 
 void	ft_create_variable(t_data *minis, char *str)
 {
@@ -63,6 +82,15 @@ void	ft_create_variable(t_data *minis, char *str)
 	ptr = NULL;
 }
 
+/* Cette fonction prend en entrée minis, qui est un pointeur vers
+une structure t_data, cmd, qui est un pointeur vers une structure
+t_board, et i, qui est un entier. La fonction examine l'argument
+cmd->tab[i] de la commande "export" pour déterminer s'il s'agit
+d'une nouvelle variable d'environnement à créer ou d'une variable
+d'environnement existante à mettre à jour. La fonction crée ou
+met à jour la variable d'environnement appropriée et retourne 1 si
+elle réussit, ou 0 sinon. */
+
 int	export_arg(t_data *minis, t_board *cmd, int i)
 {
 	char	*name;
@@ -82,6 +110,14 @@ int	export_arg(t_data *minis, t_board *cmd, int i)
 	free(name);
 	return (1);
 }
+
+/* Cette fonction prend en entrée minis, qui est un pointeur vers
+une structure t_data, et cmd, qui est un pointeur vers une
+structure t_board. La fonction exécute la commande "export" dans
+le shell en créant ou mettant à jour les variables d'environnement
+correspondantes pour chaque argument passé en argument de la commande.
+Si aucun argument n'est passé, la fonction affiche toutes les variables
+d'environnement existantes. */
 
 void	ft_export(t_data *minis, t_board *cmd)
 {
